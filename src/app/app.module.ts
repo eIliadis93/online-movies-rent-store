@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { MovieListComponent } from './movies/movies.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MovieCardReusableComponent } from './movie-card-reusable/movie-card-reusable.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token') || ''; // Ensure it returns a string
@@ -27,6 +28,7 @@ export function tokenGetter() {
     MovieDetailsComponent,
     AdminRentalsComponent,
     AddMovieComponent,
+    MovieCardReusableComponent,
   ],
   imports: [
     BrowserModule,

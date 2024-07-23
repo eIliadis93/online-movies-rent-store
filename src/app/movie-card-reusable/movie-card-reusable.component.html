@@ -1,0 +1,28 @@
+<mat-card
+  class="movie-card"
+  appearance="outlined"
+  (click)="viewDetails(movie.uuid)"
+>
+  <mat-card-header>
+    <mat-card-title>{{ movie.title }}</mat-card-title>
+    <mat-card-subtitle>{{ movie.pub_date }}</mat-card-subtitle>
+  </mat-card-header>
+  <div class="movie-card-image" *ngIf="movie.poster_url; else noImage">
+    <img
+      mat-card-avatar
+      [src]="movie.poster_url"
+      alt="{{ movie.title }} Poster"
+    />
+  </div>
+  <ng-template #noImage>
+    <div class="no-image-placeholder"></div>
+  </ng-template>
+  <mat-card-content>
+    <div class="rating">Rating: {{ movie.rating }} / 10</div>
+    <div class="categories">
+      <span *ngFor="let category of movie.categories" class="category-badge">
+        {{ category }}
+      </span>
+    </div>
+  </mat-card-content>
+</mat-card>

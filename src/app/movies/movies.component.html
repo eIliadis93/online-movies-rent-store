@@ -1,18 +1,9 @@
 <div class="movies-container">
   <h1>Movies List</h1>
   <div class="movies-list">
-    <mat-card *ngFor="let movie of movies" class="example-card" appearance="outlined">
-      <mat-card-header>
-        <mat-card-title>{{ movie.title }}</mat-card-title>
-        <mat-card-subtitle>{{ movie.pub_date }}</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-avatar [src]="movie.poster_url" alt="{{ movie.title }} Poster">
-      <mat-card-content>
-        <span>Rating: {{ movie.rating }} / 10</span>
-        <div class="categories">
-          <span *ngFor="let category of movie.categories" class="category-badge">{{ category }}</span>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <app-movie-card-reusable
+      *ngFor="let movie of movies"
+      [movie]="movie"
+    ></app-movie-card-reusable>
   </div>
 </div>

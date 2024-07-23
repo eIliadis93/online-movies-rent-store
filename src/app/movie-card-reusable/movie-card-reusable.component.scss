@@ -1,0 +1,38 @@
+ .mat-card-avatar {
+    height: 100%;
+    width: 50%;
+    border-radius: 6%;
+  }
+  
+  .mat-card{
+    text-align: center;
+  }
+  
+  .mat-card-header{
+    margin-bottom: 10px;
+    display: inline-flex;
+  }
+
+  .movie-card {
+    min-height: 400px;
+    display: block;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .movie-card-image{
+    min-height: 245px;
+    max-height: 245px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .category-badge {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    padding: 4px 8px;
+    margin: 4px;
+    display: inline-block;
+  }
