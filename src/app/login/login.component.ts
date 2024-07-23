@@ -27,11 +27,17 @@ export class LoginComponent {
         const { username, password } = this.loginForm.value;
     
         this.authService.login(username, password).subscribe(
-          response => {
-            this.router.navigate(['/movies']); // Redirect to the movies page or wherever appropriate
+          () => {
+            const role = this.authService.getRole();
+            if (role === 'admin') {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/movies']);
+            }
           },
           error => {
-            this.errorMessage = error.message || 'Login failed. Please try again.';
+            this.errorMessage = 'Invalid username or password';
+            console.error('Login failed', error);
           }
         );
       }

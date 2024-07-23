@@ -1,24 +1,34 @@
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard';
-
-import { LoginComponent } from './login/login.component';
-import { MovieListComponent } from './movie-list/movie-list.component';
 import { AddMovieComponent } from './add-movie/add-movie.component';
 import { AdminRentalsComponent } from './admin-rentals/admin-rentals.component';
+import { AuthGuard } from './auth.guard';
+import { LoginComponent } from './login/login.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { MovieListComponent } from './movies/movies.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'movies', component: MovieListComponent, canActivate: [AuthGuard] },
-  { path: 'movies/:id', component: MovieListComponent, canActivate: [AuthGuard] },
-  { path: 'user-rentals', component: AdminRentalsComponent, canActivate: [AuthGuard] },
-  { path: 'admin/add-movie', component: AddMovieComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/movies', pathMatch: 'full' },
-  { path: '**', redirectTo: '/movies' }
+  {
+    path: 'movie/:id',
+    component: MovieDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin-rentals',
+    component: AdminRentalsComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'add-movie', component: AddMovieComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/movies', pathMatch: 'full' }, // Default route
+  { path: '**', redirectTo: '/movies' }, // Wildcard route for 404
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

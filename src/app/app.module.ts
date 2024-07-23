@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
-import { MovieListComponent } from './movie-list/movie-list.component';
-import { MovieDetailsComponent } from './movie-details/movie-details.component';
-import { AdminRentalsComponent } from './admin-rentals/admin-rentals.component';
-import { AddMovieComponent } from './add-movie/add-movie.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule, HttpRequest } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from '../../auth.interceptor';
+import { AddMovieComponent } from './add-movie/add-movie.component';
+import { AdminRentalsComponent } from './admin-rentals/admin-rentals.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { MovieListComponent } from './movies/movies.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token') || ''; // Ensure it returns a string
@@ -24,7 +26,7 @@ export function tokenGetter() {
     MovieListComponent,
     MovieDetailsComponent,
     AdminRentalsComponent,
-    AddMovieComponent
+    AddMovieComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,21 +34,24 @@ export function tokenGetter() {
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter, // Use the tokenGetter function
-        allowedDomains: ['3.235.214.44:8000'], // API domain
-        disallowedRoutes: []
-      }
+        tokenGetter: tokenGetter,
+        allowedDomains: ['3.235.214.44:8000'],
+        disallowedRoutes: [],
+      },
     }),
-    AppRoutingModule
+    AppRoutingModule,
+    MatCardModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
   ],
   providers: [
-    JwtHelperService, // Provide JwtHelperService
+    JwtHelperService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor, // Provide AuthInterceptor
-      multi: true
-    }
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

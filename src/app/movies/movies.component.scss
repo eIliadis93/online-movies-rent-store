@@ -1,0 +1,35 @@
+.movies-container {
+  padding: 16px;
+}
+
+.movies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.example-card {
+  max-width: 300px;
+}
+
+.category-badge {
+  background-color: #f0f0f0;
+  border-radius: 3px;
+  padding: 4px 8px;
+  margin: 4px;
+  display: inline-block;
+}
+
+.mat-card-avatar {
+  height: 50%;
+  width: 50%;
+  border-radius: 6%;
+}
+
+.mat-card{
+  text-align: center;
+}
+
+.mat-card-header{
+  display: inline-flex;
+}
