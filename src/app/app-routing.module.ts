@@ -6,11 +6,13 @@ import { AdminRentalsComponent } from './admin-rentals/admin-rentals.component';
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
-import { MovieListComponent } from './movies/movies.component';
+import { MoviesComponent } from './movies/movies.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'movies', component: MovieListComponent, canActivate: [AuthGuard] },
+  { path: 'movies', component: MoviesComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   {
     path: 'movie/:id',
     component: MovieDetailsComponent,
@@ -22,8 +24,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'add-movie', component: AddMovieComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/movies', pathMatch: 'full' }, // Default route
-  { path: '**', redirectTo: '/movies' }, // Wildcard route for 404
+  { path: '', redirectTo: '/movies', pathMatch: 'full' },
+  { path: '**', redirectTo: '/movies' },
+
 ];
 
 @NgModule({

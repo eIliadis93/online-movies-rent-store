@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Movie } from '../interface/movie';
+import { RentalService } from '../services/rental.service';
 
 @Component({
   selector: 'app-movie-card-reusable',
@@ -8,19 +9,26 @@ import { Movie } from '../interface/movie';
   styleUrls: ['./movie-card-reusable.component.scss'],
 })
 export class MovieCardReusableComponent implements OnInit {
-  @Input() movie!: Movie;
+  @Input() movie?: Movie;
   @Input() isDetailsView: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private rentalService: RentalService) {}
 
   ngOnInit(): void {}
 
-  viewDetails(movieId: string): void {
-   if(!this.isDetailsView)this.router.navigate(['/movie', movieId]);
+  viewDetails(): void {
+    if (!this.isDetailsView) this.router.navigate(['/movie', this.movie?.uuid]);
   }
 
-  rentMovie(event: Event): void {
-    event.stopPropagation();
-    console.log('Renting movie:', this.movie.title);
+  rentMovie(): void {
+    if (this.movie)
+      this.rentalService.rentMovie(this.movie.uuid).subscribe({
+        next: (response) => {
+          alert('Movie rented successfully!');
+        },
+        error: (error) => {
+          alert('You rented that movie already.');
+        },
+      });
   }
 }

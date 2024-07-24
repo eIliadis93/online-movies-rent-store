@@ -1,0 +1,60 @@
+.profile-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+  }
+  
+  .profile-section, .rentals-section {
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+    
+  .mat-header-cell {
+    font-weight: bold;
+    background-color: #f4f4f4; 
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+  }
+  
+  .mat-header-row {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .mat-row:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .rentals-section button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+  .rentals-section button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+.mat-header-cell:first-of-type, 
+.mat-cell:first-of-type, 
+.mat-footer-cell:first-of-type {
+  padding-left: 0;
+}
+
+.mat-header-cell:last-of-type,
+.mat-cell:last-of-type,
+.mat-footer-cell:last-of-type {
+  padding-right: 0;
+}
+  

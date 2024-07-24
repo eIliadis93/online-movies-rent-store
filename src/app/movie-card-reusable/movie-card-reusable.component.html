@@ -2,35 +2,35 @@
   class="movie-card"
   [ngClass]="{'detail-page': isDetailsView}"
   appearance="outlined"
-  (click)="viewDetails(movie.uuid)"
+  (click)="viewDetails()"
 >
   <mat-card-header>
-    <mat-card-title>{{ movie.title }}</mat-card-title>
-    <mat-card-subtitle>{{ movie.pub_date }}</mat-card-subtitle>
+    <mat-card-title>{{ movie?.title }}</mat-card-title>
+    <mat-card-subtitle>{{ movie?.pub_date }}</mat-card-subtitle>
   </mat-card-header>
-  <div class="movie-card-image" *ngIf="movie.poster_url; else noImage">
+  <div class="movie-card-image" *ngIf="movie?.poster_url; else noImage">
     <img
       mat-card-avatar
-      [src]="movie.poster_url"
-      alt="{{ movie.title }} Poster"
+      [src]="movie?.poster_url"
+      alt="{{ movie?.title }} Poster"
     />
   </div>
   <ng-template #noImage>
     <div class="no-image-placeholder"></div>
   </ng-template>
   <mat-card-content>
-    <div class="rating">Rating: {{ movie.rating }} / 10</div>
+    <div class="rating">Rating: {{ movie?.rating }} / 10</div>
     <div class="categories">
-      <span *ngFor="let category of movie.categories" class="category-badge">
+      <span *ngFor="let category of movie?.categories" class="category-badge">
         {{ category }}
       </span>
     </div>
     <div *ngIf="isDetailsView">
-      <p>{{ movie.description }}</p>
+      <p>{{ movie?.description }}</p>
       <div class="reviews">
         <h4>Reviews:</h4>
-        <ng-container *ngIf="movie.reviews && movie.reviews.length > 0; else noReviews">
-          <div *ngFor="let review of movie.reviews" class="review">
+        <ng-container *ngIf="movie?.reviews && movie?.reviews?.length; else noReviews">
+          <div *ngFor="let review of movie?.reviews" class="review">
             <h5>{{ review.author }}</h5>
             <p>{{ review.content }}</p>
           </div>
@@ -39,7 +39,7 @@
           <p>No reviews available for this movie.</p>
         </ng-template>
       </div>
-      <button class="rent-button" (click)="rentMovie($event)">Rent Movie</button>
+      <button class="rent-button" (click)="rentMovie()">Rent Movie</button>
     </div>
   </mat-card-content>
 </mat-card>

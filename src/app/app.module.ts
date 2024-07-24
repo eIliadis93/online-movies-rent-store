@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,13 +13,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
-import { MovieListComponent } from './movies/movies.component';
+import { MoviesComponent } from './movies/movies.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MovieCardReusableComponent } from './movie-card-reusable/movie-card-reusable.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import { ProfileComponent } from './profile/profile.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token') || ''; // Ensure it returns a string
@@ -28,13 +31,14 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     LoginComponent,
-    MovieListComponent,
+    MoviesComponent,
     MovieDetailsComponent,
     AdminRentalsComponent,
     AddMovieComponent,
     MovieCardReusableComponent,
     FooterComponent,
     HeaderComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +57,9 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
+    MatInputModule,
+    FormsModule,
+    MatTableModule,
   ],
   providers: [
     JwtHelperService,

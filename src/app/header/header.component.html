@@ -2,16 +2,21 @@
   <button mat-button routerLink="/" *ngIf="this.isLoggedIn">
     <mat-icon>home</mat-icon>
   </button>
-  <button mat-button class="header-button" *ngIf="this.isLoggedIn">
-    {{ userName }}
-  </button>
   <button
-    routerLink="/gdp"
+    routerLink="/profile"
     mat-button
     class="header-button"
     *ngIf="this.isLoggedIn"
   >
-    Rentals
+    {{ userName }}
+  </button>
+  <button
+    routerLink="/movies"
+    mat-button
+    class="header-button"
+    *ngIf="this.isLoggedIn"
+  >
+    Movie List
   </button>
   <button
     (click)="this.logout()"

@@ -1,0 +1,54 @@
+<div class="profile-container">
+    <div class="profile-section">
+      <h2>Profile Information</h2>
+      <p><strong>Email:</strong> {{ profile.email }}</p>
+      <p><strong>First Name:</strong> {{ profile.first_name }}</p>
+      <p><strong>Last Name:</strong> {{ profile.last_name }}</p>
+      <p><strong>Wallet Balance:</strong> {{ profile.wallet | currency }}</p>
+    </div>
+  
+    <div class="rentals-section">
+      <h2>Rental Movie History</h2>
+      <table mat-table [dataSource]="rentals" class="mat-elevation-z8">
+        <ng-container matColumnDef="uuid">
+          <th mat-header-cell *matHeaderCellDef>UUID</th>
+          <td mat-cell *matCellDef="let rental">{{ rental.uuid }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rental_date">
+          <th mat-header-cell *matHeaderCellDef>Rental Date</th>
+          <td mat-cell *matCellDef="let rental">{{ rental.rental_date | date }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="return_date">
+          <th mat-header-cell *matHeaderCellDef>Return Date</th>
+          <td mat-cell *matCellDef="let rental">
+            {{ rental.return_date ? (rental.return_date | date) : 'Not Returned' }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="is_paid">
+          <th mat-header-cell *matHeaderCellDef>Paid</th>
+          <td mat-cell *matCellDef="let rental">{{ rental.is_paid ? 'Yes' : 'No' }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="movie">
+          <th mat-header-cell *matHeaderCellDef>Movie</th>
+          <td mat-cell *matCellDef="let rental">{{ rental.movie }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let rental">
+            <button mat-button (click)="returnMovie(rental.uuid)" [disabled]="rental.return_date">
+              Return Movie
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="['uuid', 'rental_date', 'return_date', 'is_paid', 'movie', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['uuid', 'rental_date', 'return_date', 'is_paid', 'movie', 'actions']"></tr>
+      </table>
+    </div>
+  </div>
+  
