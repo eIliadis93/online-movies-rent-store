@@ -1,5 +1,6 @@
 <mat-card
   class="movie-card"
+  [ngClass]="{'detail-page': isDetailsView}"
   appearance="outlined"
   (click)="viewDetails(movie.uuid)"
 >
@@ -23,6 +24,22 @@
       <span *ngFor="let category of movie.categories" class="category-badge">
         {{ category }}
       </span>
+    </div>
+    <div *ngIf="isDetailsView">
+      <p>{{ movie.description }}</p>
+      <div class="reviews">
+        <h4>Reviews:</h4>
+        <ng-container *ngIf="movie.reviews && movie.reviews.length > 0; else noReviews">
+          <div *ngFor="let review of movie.reviews" class="review">
+            <h5>{{ review.author }}</h5>
+            <p>{{ review.content }}</p>
+          </div>
+        </ng-container>
+        <ng-template #noReviews>
+          <p>No reviews available for this movie.</p>
+        </ng-template>
+      </div>
+      <button class="rent-button" (click)="rentMovie($event)">Rent Movie</button>
     </div>
   </mat-card-content>
 </mat-card>

@@ -7,8 +7,14 @@ export interface Movie {
   pub_date: number;
   rating: number;
   categories: Category[];
+  reviews?: Review[];
 }
 
 export interface Category {
   name: string;
+}
+
+export interface Review {
+  author: string;
+  content: string;
 }

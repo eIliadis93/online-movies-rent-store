@@ -16,6 +16,10 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { MovieListComponent } from './movies/movies.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MovieCardReusableComponent } from './movie-card-reusable/movie-card-reusable.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token') || ''; // Ensure it returns a string
@@ -29,6 +33,8 @@ export function tokenGetter() {
     AdminRentalsComponent,
     AddMovieComponent,
     MovieCardReusableComponent,
+    FooterComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +51,8 @@ export function tokenGetter() {
     MatCardModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
   ],
   providers: [
     JwtHelperService,

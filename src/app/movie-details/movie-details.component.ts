@@ -1,6 +1,8 @@
+// movie-details.component.ts
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie.service';
+import { Movie } from '../interface/movie';
 
 @Component({
   selector: 'app-movie-details',
@@ -8,29 +10,19 @@ import { MovieService } from '../services/movie.service';
   styleUrls: ['./movie-details.component.scss']
 })
 export class MovieDetailsComponent implements OnInit {
-  movie: any;
+  movie!: Movie;
 
   constructor(
     private route: ActivatedRoute,
-    private movieService: MovieService,
-    private router: Router
-  ) {}
+    private movieService: MovieService
+  ) { }
 
   ngOnInit(): void {
-    const movieUuid = this.route.snapshot.paramMap.get('id');
-    if (movieUuid) {
-      this.movieService.getMovieById(movieUuid).subscribe(
-        movie => {
-          this.movie = movie;
-        },
-        error => {
-          console.error('Error fetching movie details', error);
-          this.router.navigate(['/movies']);
-        }
-      );
-    } else {
-      console.error('Movie UUID is null');
-      this.router.navigate(['/movies']);
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.movieService.getMovieById(id).subscribe((movie: Movie) => {
+        this.movie = movie;
+      });
     }
   }
 }

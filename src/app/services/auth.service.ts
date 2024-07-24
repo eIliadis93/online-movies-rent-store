@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, BehaviorSubject, switchMap, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -10,6 +10,10 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   private baseUrl = environment.apiUrl;
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private isRefreshing = false;
+  private loginStatus = new BehaviorSubject<boolean>(this.isLoggedIn());
+  loginStatusChange = this.loginStatus.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -32,6 +36,7 @@ export class AuthService {
             } else {
               localStorage.setItem('user_role', 'user');
             }
+            this.loginStatus.next(true);
           } else {
             throw new Error('Invalid response from server');
           }
@@ -40,19 +45,31 @@ export class AuthService {
   }
 
   refreshToken(): Observable<any> {
-    const refreshToken = localStorage.getItem('refresh_token');
-    return this.http
-      .post<any>(`${this.baseUrl}/auth/refresh/`, { refresh: refreshToken })
-      .pipe(
-        tap((response) => {
-          if (response && response.access) {
-            localStorage.setItem('access_token', response.access);
-          } else {
+    const refreshToken = this.getRefreshToken();
+    if (this.isRefreshing) {
+      return this.refreshTokenSubject.asObservable();
+    } else {
+      this.isRefreshing = true;
+      return this.http
+        .post<any>(`${this.baseUrl}/auth/refresh/`, { refresh: refreshToken })
+        .pipe(
+          tap((response) => {
+            if (response && response.access) {
+              localStorage.setItem('access_token', response.access);
+              this.refreshTokenSubject.next(response.access);
+            } else {
+              this.logout();
+              throw new Error('Invalid response from server');
+            }
+          }),
+          catchError((error) => {
+            this.isRefreshing = false;
             this.logout();
-            throw new Error('Invalid response from server');
-          }
-        })
-      );
+            return throwError(error);
+          }),
+          switchMap(() => this.refreshTokenSubject.asObservable())
+        );
+    }
   }
 
   isAuthenticated(): boolean {
@@ -65,6 +82,7 @@ export class AuthService {
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('username');
     localStorage.removeItem('user_role');
+    this.loginStatus.next(false);
     this.router.navigate(['/login']);
   }
 
@@ -80,5 +98,9 @@ export class AuthService {
 
   getAccessToken(): string | null {
     return localStorage.getItem('access_token');
+  }
+
+  private getRefreshToken(): string | null {
+    return localStorage.getItem('refresh_token');
   }
 }

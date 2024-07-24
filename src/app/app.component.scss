@@ -1,0 +1,9 @@
+.app-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Header | Content | Footer */
+    min-height: 100vh;
+  }
+
+  .content {
+    grid-row: 2 / 3;
+  }

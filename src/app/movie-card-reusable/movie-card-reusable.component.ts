@@ -9,12 +9,18 @@ import { Movie } from '../interface/movie';
 })
 export class MovieCardReusableComponent implements OnInit {
   @Input() movie!: Movie;
+  @Input() isDetailsView: boolean = false;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   viewDetails(movieId: string): void {
-    this.router.navigate(['/movie', movieId]);
+   if(!this.isDetailsView)this.router.navigate(['/movie', movieId]);
+  }
+
+  rentMovie(event: Event): void {
+    event.stopPropagation();
+    console.log('Renting movie:', this.movie.title);
   }
 }

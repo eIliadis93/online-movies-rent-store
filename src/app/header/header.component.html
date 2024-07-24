@@ -1,0 +1,26 @@
+<mat-toolbar class="header">
+  <button mat-button routerLink="/" *ngIf="this.isLoggedIn">
+    <mat-icon>home</mat-icon>
+  </button>
+  <button mat-button class="header-button" *ngIf="this.isLoggedIn">
+    {{ userName }}
+  </button>
+  <button
+    routerLink="/gdp"
+    mat-button
+    class="header-button"
+    *ngIf="this.isLoggedIn"
+  >
+    Rentals
+  </button>
+  <button
+    (click)="this.logout()"
+    mat-button
+    class="header-button"
+    *ngIf="this.isLoggedIn"
+  >
+    Logout
+  </button>
+  <span *ngIf="!this.isLoggedIn">Please login to browse movies</span>
+  <span class="spacer"></span>
+</mat-toolbar>
