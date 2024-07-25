@@ -28,6 +28,8 @@ import { MoviesComponent } from './movies/movies.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import {MatSelectModule} from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token') || '';
@@ -71,6 +73,8 @@ export function tokenGetter() {
     MatSortModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatChipsModule,
+    MatExpansionModule,
   ],
   providers: [
     JwtHelperService,

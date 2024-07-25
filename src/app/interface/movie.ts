@@ -18,3 +18,12 @@ export interface Review {
   author: string;
   content: string;
 }
+
+export interface MovieCreate {
+  title: string;
+  pub_date?: number;
+  duration?: number;
+  rating?: number;
+  description?: string;
+  categories: Category[];
+}

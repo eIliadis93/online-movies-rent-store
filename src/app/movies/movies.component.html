@@ -5,4 +5,11 @@
       [movie]="movie"
     ></app-movie-card-reusable>
   </div>
+
+  <mat-paginator
+    [length]="totalMovies"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
 </div>
