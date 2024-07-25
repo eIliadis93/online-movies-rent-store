@@ -36,69 +36,69 @@
     </mat-form-field>
 
     <!-- Table -->
-    <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" matSort>
-        <!-- UUID Column -->
-        <ng-container matColumnDef="uuid">
-          <th mat-header-cell *matHeaderCellDef>UUID</th>
-          <td mat-cell *matCellDef="let rental">{{ rental.uuid }}</td>
-        </ng-container>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- UUID Column -->
+    <ng-container matColumnDef="uuid">
+      <th mat-header-cell *matHeaderCellDef>UUID</th>
+      <td mat-cell *matCellDef="let rental">{{ rental.uuid }}</td>
+    </ng-container>
 
-        <!-- Rental Date Column -->
-        <ng-container matColumnDef="rental_date">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Rental Date</th>
-          <td mat-cell *matCellDef="let rental">{{ rental.rental_date | date }}</td>
-        </ng-container>
+    <!-- Rental Date Column -->
+    <ng-container matColumnDef="rental_date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rental Date</th>
+      <td mat-cell *matCellDef="let rental">{{ rental.rental_date | date }}</td>
+    </ng-container>
 
-        <!-- Return Date Column -->
-        <ng-container matColumnDef="return_date">
-          <th mat-header-cell *matHeaderCellDef>Return Date</th>
-          <td mat-cell *matCellDef="let rental">
-            {{ rental.return_date ? (rental.return_date | date) : "Not Returned" }}
-          </td>
-        </ng-container>
+    <!-- Return Date Column -->
+    <ng-container matColumnDef="return_date">
+      <th mat-header-cell *matHeaderCellDef>Return Date</th>
+      <td mat-cell *matCellDef="let rental">
+        {{ rental.return_date ? (rental.return_date | date) : "Not Returned" }}
+      </td>
+    </ng-container>
 
-        <!-- Paid Column -->
-        <ng-container matColumnDef="is_paid">
-          <th mat-header-cell *matHeaderCellDef>Paid</th>
-          <td mat-cell *matCellDef="let rental">{{ rental.is_paid ? "Yes" : "No" }}</td>
-        </ng-container>
+    <!-- Paid Column -->
+    <ng-container matColumnDef="is_paid">
+      <th mat-header-cell *matHeaderCellDef>Paid</th>
+      <td mat-cell *matCellDef="let rental">{{ rental.is_paid ? "Yes" : "No" }}</td>
+    </ng-container>
 
-        <!-- Movie Column -->
-        <ng-container matColumnDef="movie">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Movie</th>
-          <td mat-cell *matCellDef="let rental">{{ rental.movie }}</td>
-        </ng-container>
+    <!-- Movie Column -->
+    <ng-container matColumnDef="movie">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Movie</th>
+      <td mat-cell *matCellDef="let rental">{{ rental.movie }}</td>
+    </ng-container>
 
-        <!-- User Column (Admin only) -->
-        <ng-container matColumnDef="user" *ngIf="isAdmin">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
-          <td mat-cell *matCellDef="let rental">{{ rental.user }}</td>
-        </ng-container>
+    <!-- User Column (Admin only) -->
+    <ng-container matColumnDef="user" *ngIf="isAdmin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+      <td mat-cell *matCellDef="let rental">{{ rental.user }}</td>
+    </ng-container>
 
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Return</th>
-          <td mat-cell *matCellDef="let rental">
-            <button mat-raised-button (click)="returnMovie(rental.uuid)" [disabled]="(isAdmin && rental.user !== profile.email) || rental.return_date">
-              Return Movie
-            </button>
-          </td>
-        </ng-container>
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Return</th>
+      <td mat-cell *matCellDef="let rental">
+        <button mat-raised-button (click)="returnMovie(rental.uuid)" [disabled]="(isAdmin && rental.user !== profile.email) || rental.return_date">
+          Return Movie
+        </button>
+      </td>
+    </ng-container>
 
-        <!-- Header and Row Templates -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+    <!-- Header and Row Templates -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
-      <!-- Paginator -->
-      <mat-paginator
-        [pageSize]="paginator?.pageSize || 10"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        [length]="totalResults"
-        (page)="onPageChange($event)"
-      >
-      </mat-paginator>
-    </div>
+  <!-- Paginator -->
+  <mat-paginator
+    [pageSize]="paginator?.pageSize || 10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    [length]="totalResults"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>
   </div>
 </div>

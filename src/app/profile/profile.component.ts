@@ -75,6 +75,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
     this.loadProfile();
   }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+  }
+
   loadProfile(): void {
     this.profileService.getProfile().subscribe((profile) => {
       this.profile = profile;
@@ -82,7 +87,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.loadRentals(
         this.paginator?.pageIndex + 1 || 1,
         this.paginator?.pageSize || 10
-      ); // Initial load
+      );
     });
   }
 
@@ -144,7 +149,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.loadRentals(
           this.paginator?.pageIndex + 1 || 1,
           this.paginator?.pageSize || 10
-        ); // Reload rentals for current page
+        );
       },
       error: (error) => {
         this.alertService.openAlert({
@@ -171,7 +176,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.loadRentals(
       this.paginator?.pageIndex + 1 || 1,
       this.paginator?.pageSize || 10
-    ); // Reload rentals with the updated filter
+    );
   }
 
   async openAddFundsDialog(): Promise<void> {
