@@ -19,6 +19,14 @@
     Movie List
   </button>
   <button
+  routerLink="/admin-panel"
+  mat-button
+  class="header-button"
+  *ngIf="isAdmin"
+  >
+    Admin Panel
+  </button>
+  <button
     (click)="this.logout()"
     mat-button
     class="header-button"

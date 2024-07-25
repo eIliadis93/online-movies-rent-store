@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Movie } from '../interface/movie';
 import { AuthService } from '../services/auth.service';
 import { MovieService } from '../services/movie.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-movies',
@@ -15,7 +16,8 @@ export class MoviesComponent implements OnInit {
   constructor(
     private movieService: MovieService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,11 @@ export class MoviesComponent implements OnInit {
         this.movies = response.results;
       },
       (error) => {
-        console.error('Failed to fetch movies', error);
+        this.alertService.openAlert({
+          type: 'alert',
+          title: 'Error',
+          message: 'Failed to fetch movies.'
+        });
       }
     );
   }

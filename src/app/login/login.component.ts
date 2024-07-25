@@ -28,16 +28,11 @@ export class LoginComponent {
     
         this.authService.login(username, password).subscribe(
           () => {
-            const role = this.authService.getRole();
-            if (role === 'admin') {
-              this.router.navigate(['/admin']);
-            } else {
-              this.router.navigate(['/movies']);
-            }
+            const isAdmin = this.authService.isAdminUser();
+            isAdmin ?  this.router.navigate(['/admin-panel']) : this.router.navigate(['/movies']);
           },
           error => {
             this.errorMessage = 'Invalid username or password';
-            console.error('Login failed', error);
           }
         );
       }

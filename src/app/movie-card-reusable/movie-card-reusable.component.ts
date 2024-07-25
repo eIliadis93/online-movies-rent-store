@@ -25,7 +25,6 @@ export class MovieCardReusableComponent implements OnInit {
     if (this.movie) {
       this.rentalService.rentMovie(this.movie.uuid).subscribe({
         next: (response) => {
-          // Open the reusable dialog
           this.alertService.openAlert({
             type: 'alert',
             title: 'Success',
@@ -33,7 +32,6 @@ export class MovieCardReusableComponent implements OnInit {
           });
         },
         error: (error) => {
-          // Open the reusable dialog for errors
           this.alertService.openAlert({
             type: 'alert',
             title: 'Error',

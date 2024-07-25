@@ -2,12 +2,12 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddMovieComponent } from './add-movie/add-movie.component';
-import { AdminRentalsComponent } from './admin-rentals/admin-rentals.component';
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { MoviesComponent } from './movies/movies.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,8 +19,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin-rentals',
-    component: AdminRentalsComponent,
+    path: 'admin-panel',
+    component: AdminPanelComponent,
     canActivate: [AuthGuard],
   },
   { path: 'add-movie', component: AddMovieComponent, canActivate: [AuthGuard] },

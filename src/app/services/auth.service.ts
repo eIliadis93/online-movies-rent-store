@@ -14,6 +14,7 @@ export class AuthService {
   private isRefreshing = false;
   private loginStatus = new BehaviorSubject<boolean>(this.isLoggedIn());
   loginStatusChange = this.loginStatus.asObservable();
+  private isAdmin = new BehaviorSubject<boolean>(this.checkAdmin());
 
   constructor(
     private http: HttpClient,
@@ -33,8 +34,10 @@ export class AuthService {
 
             if (username === 'deuscand5admin') {
               localStorage.setItem('user_role', 'admin');
+              this.isAdmin.next(true);
             } else {
               localStorage.setItem('user_role', 'user');
+              this.isAdmin.next(false);
             }
             this.loginStatus.next(true);
           } else {
@@ -83,11 +86,16 @@ export class AuthService {
     localStorage.removeItem('username');
     localStorage.removeItem('user_role');
     this.loginStatus.next(false);
+    this.isAdmin.next(false);
     this.router.navigate(['/login']);
   }
 
-  getRole(): string | null {
-    return localStorage.getItem('user_role');
+  isAdminUser(): Observable<boolean> {
+    return this.isAdmin.asObservable();
+  }
+
+  private checkAdmin(): boolean {
+    return localStorage.getItem('user_role') === 'admin';
   }
 
   isLoggedIn(): boolean {

@@ -26,6 +26,15 @@ $my-app-theme: mat-light-theme($my-primary, $my-accent);
   background-color: darken(#343a40, 10%);
 }
 
+.mat-paginator-container{
+  border: 2px solid #343a40;
+  background-color: #6c757d;
+}
+
+.mat-sort-header-container{
+  justify-content: center;
+  }
+
 html, body { height: 100%; }
 body {
     background-color: #6c757d;

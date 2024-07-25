@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -13,7 +7,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  userName = localStorage.getItem('username');
+  userName: string | null = '';
+  isAdmin: boolean = false;
   isLoggedIn: boolean = false;
 
   constructor(
@@ -24,6 +19,12 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authService.loginStatusChange.subscribe((status: boolean) => {
       this.isLoggedIn = status;
+      this.userName = localStorage.getItem('username');
+      this.cdRef.detectChanges();
+    });
+
+    this.authService.isAdminUser().subscribe((isAdmin: boolean) => {
+      this.isAdmin = isAdmin;
       this.cdRef.detectChanges();
     });
   }
