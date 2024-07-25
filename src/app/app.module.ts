@@ -27,6 +27,7 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { MoviesComponent } from './movies/movies.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import {MatSelectModule} from '@angular/material/select';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token') || '';
@@ -69,6 +70,7 @@ export function tokenGetter() {
     MatDialogModule,
     MatSortModule,
     MatFormFieldModule,
+    MatSelectModule,
   ],
   providers: [
     JwtHelperService,
