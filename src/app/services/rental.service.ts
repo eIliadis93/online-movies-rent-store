@@ -13,12 +13,13 @@ export class RentalService {
 
   constructor(private http: HttpClient) {}
 
-  getAllRentals(): Observable<RentalsResponse> {
-    return this.http.get<RentalsResponse>(`${this.baseUrl}/rent-store/rentals/`);
-  }
-
-  getUserRentals(): Observable<RentalsResponse> {
-    return this.http.get<RentalsResponse>(`${this.baseUrl}/rent-store/rentals/`);
+  getAllRentals(page: number, pageSize: number): Observable<RentalsResponse> {
+    return this.http.get<RentalsResponse>(`${this.baseUrl}/rent-store/rentals/`, {
+      params: {
+        page: page.toString(),
+        page_size: pageSize.toString(),
+      },
+    });
   }
 
   rentMovie(movieUuid: string): Observable<Movie> {

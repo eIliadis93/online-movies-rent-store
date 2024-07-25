@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authService.loginStatusChange.subscribe((status: boolean) => {
       this.isLoggedIn = status;
-      this.cdRef.detectChanges(); // Manually trigger change detection
+      this.cdRef.detectChanges();
     });
   }
 

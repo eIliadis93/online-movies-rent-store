@@ -13,8 +13,6 @@ export class AdminRentalsComponent implements OnInit {
   constructor(private rentalService: RentalService) {}
 
   ngOnInit(): void {
-    this.rentalService.getAllRentals().subscribe((rentals) => {
-      this.rentals = rentals.results;
-    });
+    
   }
 }

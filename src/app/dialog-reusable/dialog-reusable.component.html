@@ -1,0 +1,26 @@
+<ng-container [ngSwitch]="contentType">
+    <ng-container *ngSwitchCase="'alert'">
+      <h1 mat-dialog-title>{{ data.title }}</h1>
+      <div mat-dialog-content>
+        <p>{{ data.message }}</p>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="onClose()">OK</button>
+      </div>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="'addFunds'">
+      <h1 mat-dialog-title>{{ data.title }}</h1>
+      <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Amount to Add</mat-label>
+          <input matInput [(ngModel)]="data.funds" name="funds" type="number" required />
+        </mat-form-field>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="onAddFunds()">Add Funds</button>
+        <button mat-button (click)="onClose()">Cancel</button>
+      </div>
+    </ng-container>
+  </ng-container>
+  
