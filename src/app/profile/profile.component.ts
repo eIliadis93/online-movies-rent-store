@@ -36,6 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Rental>();
   filterByReturnDate: string | null = 'all';
   rentals: Rental[] = [];
+  filteredRentals: Rental[] = [];
   totalResults: number = 0;
   private subscriptions: Subscription = new Subscription();
   displayedColumns: string[] = [
@@ -78,6 +79,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   loadProfile(): void {
@@ -104,8 +106,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
 
         this.rentals = this.applyReturnDateFilter(this.rentals);
-
-        this.dataSource.data = this.rentals;
+        this.filteredRentals = [...this.rentals];
+        this.dataSource.data = [...this.rentals];
 
         if (this.paginator) {
           this.paginator.length = this.totalResults;
@@ -163,8 +165,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
+    this.dataSource.filter = filterValue;
+
+    this.filteredRentals = this.rentals.filter(
+      (rental) =>
+        rental.movie.toLowerCase().includes(filterValue) ||
+        rental.uuid.toLowerCase().includes(filterValue)
+    );
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

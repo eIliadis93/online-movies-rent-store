@@ -1,15 +1,50 @@
 <div class="movies-container">
-  <div class="movies-list">
-    <app-movie-card-reusable
-      *ngFor="let movie of movies"
-      [movie]="movie"
-    ></app-movie-card-reusable>
+  <div class="filters">
+    <mat-form-field>
+      <mat-label>Category</mat-label>
+      <mat-select (selectionChange)="onCategoryChange($event)">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category.name">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>From Rating</mat-label>
+      <input matInput type="number" (change)="onFromRatingChange($event)" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>To Rating</mat-label>
+      <input matInput type="number" (change)="onToRatingChange($event)" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>From Year</mat-label>
+      <input matInput type="number" (change)="onFromYearChange($event)" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>To Year</mat-label>
+      <input matInput type="number" (change)="onToYearChange($event)" />
+    </mat-form-field>
   </div>
 
-  <mat-paginator
-    [length]="totalMovies"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    (page)="onPageChange($event)">
-  </mat-paginator>
+  <div class="content">
+    <div class="movies-list">
+      <app-movie-card-reusable
+        *ngFor="let movie of movies"
+        [movie]="movie"
+        class="movie-card"
+      ></app-movie-card-reusable>
+    </div>
+
+    <mat-paginator
+      [length]="totalMovies"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
 </div>

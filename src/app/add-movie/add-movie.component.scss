@@ -1,0 +1,96 @@
+.form-container {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+  }
+  
+  mat-card-header {
+    background-color: #3f51b5;
+    color: white;
+  }
+  
+  mat-card-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .movie-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  mat-form-field mat-label {
+    color: #3f51b5;
+  }
+  
+  mat-form-field mat-input-element {
+    font-size: 16px;
+  }
+  
+  mat-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  mat-chip {
+    background-color: #e0e0e0;
+  }
+  
+  mat-chip button {
+    color: #f44336;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border-radius: 4px;
+  }
+  
+  button[type="submit"] {
+    background-color: #3f51b5;
+    color: white;
+  }
+  
+  button[type="button"] {
+    background-color: #e0e0e0;
+    color: #000;
+  }
+
+  .form-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .movie-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  

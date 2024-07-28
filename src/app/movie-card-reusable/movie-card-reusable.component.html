@@ -5,8 +5,14 @@
   (click)="viewDetails()"
 >
   <mat-card-header>
-    <mat-card-title>{{ movie?.title }}</mat-card-title>
-    <mat-card-subtitle>{{ movie?.pub_date }}</mat-card-subtitle>
+    <mat-card-title *ngIf="movie?.title; else titlePlaceholder">{{ movie?.title }}</mat-card-title>
+    <ng-template #titlePlaceholder>
+      <div class="placeholder">Title</div>
+    </ng-template>
+    <mat-card-subtitle *ngIf="movie?.pub_date; else subtitlePlaceholder">{{ movie?.pub_date }}</mat-card-subtitle>
+    <ng-template #subtitlePlaceholder>
+      <div class="placeholder">Pub Date</div>
+    </ng-template>
   </mat-card-header>
   <div class="movie-card-image" *ngIf="movie?.poster_url; else noImage">
     <img
@@ -16,17 +22,26 @@
     />
   </div>
   <ng-template #noImage>
-    <div class="no-image-placeholder"></div>
+    <div class="no-image-placeholder">No Image</div>
   </ng-template>
   <mat-card-content>
-    <div class="rating">Rating: {{ movie?.rating }} / 10</div>
-    <div class="categories">
+    <div class="rating" *ngIf="movie?.rating; else ratingPlaceholder">Rating: {{ movie?.rating }} / 10</div>
+    <ng-template #ratingPlaceholder>
+      <div class="placeholder">No rating available</div>
+    </ng-template>
+    <div class="categories" *ngIf="movie?.categories?.length; else categoriesPlaceholder">
       <span *ngFor="let category of movie?.categories" class="category-badge">
         {{ category }}
       </span>
     </div>
+    <ng-template #categoriesPlaceholder>
+      <div class="placeholder">Categories</div>
+    </ng-template>
     <div *ngIf="isDetailsView">
-      <p>{{ movie?.description }}</p>
+      <p *ngIf="movie?.description; else descriptionPlaceholder">{{ movie?.description }}</p>
+      <ng-template #descriptionPlaceholder>
+        <div class="placeholder">Description</div>
+      </ng-template>
       <div class="reviews">
         <h4>Reviews:</h4>
         <ng-container *ngIf="movie?.reviews && movie?.reviews?.length; else noReviews">
