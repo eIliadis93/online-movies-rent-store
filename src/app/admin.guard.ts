@@ -7,22 +7,22 @@ import { AuthService } from './services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> {
-    return this.authService.isAuthenticated().pipe(
-      map(isAuthenticated => {
-        if (isAuthenticated) {
+    return this.authService.isAdminUser().pipe(
+      map(isAdmin => {
+        if (isAdmin) {
           return true;
         } else {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/movies']);
           return false;
         }
       }),
-      tap(isAuthenticated => {
-        if (!isAuthenticated) {
-          console.log('User is not authenticated. Redirecting to login.');
+      tap(isAdmin => {
+        if (!isAdmin) {
+          console.log('User is not an admin. Redirecting to movies.');
         }
       })
     );

@@ -2,7 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, tap, BehaviorSubject, switchMap, catchError, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -10,7 +18,9 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   private baseUrl = environment.apiUrl;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
   private isRefreshing = false;
   private loginStatus = new BehaviorSubject<boolean>(this.isLoggedIn());
   loginStatusChange = this.loginStatus.asObservable();
@@ -32,17 +42,21 @@ export class AuthService {
             localStorage.setItem('refresh_token', response.refresh);
             localStorage.setItem('username', username);
 
-            if (username === 'deuscand5admin') {
-              localStorage.setItem('user_role', 'admin');
-              this.isAdmin.next(true);
-            } else {
-              localStorage.setItem('user_role', 'user');
-              this.isAdmin.next(false);
-            }
+            const userRole = username === 'deuscand5admin' ? 'admin' : 'user';
+            localStorage.setItem('user_role', userRole);
+            this.isAdmin.next(userRole === 'admin');
+            console.log(this.isAdmin.value);
             this.loginStatus.next(true);
+            this.isAdmin.value
+              ? this.router.navigate(['/admin-panel'])
+              : this.router.navigate(['/movies']);
           } else {
             throw new Error('Invalid response from server');
           }
+        }),
+        catchError((error) => {
+          console.error('Login error:', error);
+          return throwError(error);
         })
       );
   }
@@ -75,9 +89,9 @@ export class AuthService {
     }
   }
 
-  isAuthenticated(): boolean {
+  isAuthenticated(): Observable<boolean> {
     const token = localStorage.getItem('access_token');
-    return !!token && !this.jwtHelper.isTokenExpired(token);
+    return of(!!token && !this.jwtHelper.isTokenExpired(token));
   }
 
   logout() {

@@ -27,3 +27,14 @@ export interface MovieCreate {
   description?: string;
   categories: Category[];
 }
+
+export interface MovieCount {
+  [year: number]: number;
+}
+
+export interface ApiResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}

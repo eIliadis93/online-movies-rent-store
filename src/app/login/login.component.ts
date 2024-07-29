@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertService } from '../services/alert.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,27 +16,31 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
-    onSubmit(): void {
-      if (this.loginForm.valid) {
-        const { username, password } = this.loginForm.value;
-    
-        this.authService.login(username, password).subscribe(
-          () => {
-            const isAdmin = this.authService.isAdminUser();
-            isAdmin ?  this.router.navigate(['/admin-panel']) : this.router.navigate(['/movies']);
-          },
-          error => {
-            this.errorMessage = 'Invalid username or password';
-          }
-        );
-      }
-    }
-}
 
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const { username, password } = this.loginForm.value;
+
+      this.authService.login(username, password).subscribe(
+        () => {
+          this.authService.isAdminUser().subscribe();
+        },
+        (error) => {
+          this.alertService.openAlert({
+            type: 'alert',
+            title: 'Error',
+            message: 'Invalid username or password',
+          });
+        }
+      );
+    }
+  }
+}
