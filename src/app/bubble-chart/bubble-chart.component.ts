@@ -30,9 +30,7 @@ export class BubbleChartComponent implements OnInit, OnDestroy {
     this.dataSubscription.add(
       this.movieService.getMoviesAll().subscribe(
         (movies) => {
-          console.log('Fetched movies:', movies); 
           const movieCounts = this.processData(movies);
-          console.log('Processed movie counts:', movieCounts);
           this.chartOptions = {
             theme: 'dark2',
             animationEnabled: true,
@@ -78,8 +76,6 @@ export class BubbleChartComponent implements OnInit, OnDestroy {
         } else {
           movieCounts[year] = 1;
         }
-      } else {
-        console.warn('Movie with invalid or missing pub_date:', movie);
       }
     });
   

@@ -25,7 +25,7 @@ export interface MovieCreate {
   duration?: number;
   rating?: number;
   description?: string;
-  categories: Category[];
+  categories: string[];
 }
 
 export interface MovieCount {

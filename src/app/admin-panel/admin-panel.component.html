@@ -1,2 +1,22 @@
-<app-add-movie></app-add-movie>
-<app-bubble-chart></app-bubble-chart>
+<mat-accordion class="accordion-container">
+  <mat-expansion-panel (opened)="onAddMoviePanelOpen()" class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel_title">
+        Add Movie
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-add-movie></app-add-movie>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    (opened)="onBubbleChartPanelOpen()"
+    class="expansion-panel"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel_title">
+        Bubble Chart
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-bubble-chart></app-bubble-chart>
+  </mat-expansion-panel>
+</mat-accordion>

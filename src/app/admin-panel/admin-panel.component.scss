@@ -1,0 +1,14 @@
+.expansion-panel{
+    background-color: #343a40;
+    margin-bottom: 15px;
+    padding: 10px;
+    &_title{
+        color: white;
+        font-weight: bold;
+    }
+}
+
+.accordion-container {
+    margin: 20px;
+    padding: 10px;
+}

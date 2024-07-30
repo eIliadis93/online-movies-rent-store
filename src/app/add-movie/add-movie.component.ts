@@ -1,26 +1,25 @@
-import { Component } from '@angular/core';
-import { MovieService } from '../services/movie.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from '../services/alert.service';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Category } from '../interface/movie';
+import { AlertService } from '../services/alert.service';
+import { MovieService } from '../services/movie.service';
 
 @Component({
   selector: 'app-add-movie',
   templateUrl: './add-movie.component.html',
-  styleUrls: ['./add-movie.component.scss']
+  styleUrls: ['./add-movie.component.scss'],
 })
-export class AddMovieComponent {
+export class AddMovieComponent implements OnInit {
   movieForm!: FormGroup;
-  categoryCtrl: FormControl;
+  availableCategories: Category[] = [];
 
   constructor(
     private fb: FormBuilder,
     private movieService: MovieService,
     private alertService: AlertService,
     private router: Router
-  ) {
-    this.categoryCtrl = new FormControl('');
-  }
+  ) {}
 
   ngOnInit(): void {
     this.movieForm = this.fb.group({
@@ -30,39 +29,50 @@ export class AddMovieComponent {
       rating: [null],
       description: [''],
       categories: this.fb.array([]),
+      categorySelect: [''],
     });
+
+    this.fetchCategories();
   }
 
-  addCategory(event: any): void {
-    const input = event.input;
-    const value = event.value.trim();
-
-    if (value && !this.movieForm.value.categories.includes(value)) {
-      this.movieForm.value.categories.push(value);
-    }
-
-    if (input) {
-      input.value = '';
-    }
+  get categories(): FormArray {
+    return this.movieForm.get('categories') as FormArray;
   }
 
-  removeCategory(category: string): void {
-    const categories = this.movieForm.value.categories as string[];
-    const index = categories.indexOf(category);
+  fetchCategories(): void {
+    this.movieService.getCategories().subscribe(
+      (categories) => {
+        this.availableCategories = categories;
+      },
+      (error) => {
+        this.alertService.openAlert({
+          type: 'alert',
+          title: 'Error',
+          message: 'Failed to fetch categories.',
+        });
+      }
+    );
+  }
 
-    if (index >= 0) {
-      categories.splice(index, 1);
-    }
+  onCategorySelected(event: any): void {
+    const selectedCategories = event.value;
+    this.categories.clear();
+    selectedCategories.forEach((category: string) => {
+      this.categories.push(this.fb.control(category));
+    });
   }
 
   onSubmit(): void {
     if (this.movieForm.valid) {
-      this.movieService.addMovie(this.movieForm.value).subscribe(
+      const formValue = this.movieForm.value;
+      formValue.categories = formValue.categorySelect;
+
+      this.movieService.addMovie(formValue).subscribe(
         () => {
           this.alertService.openAlert({
             type: 'alert',
             title: 'Success',
-            message: 'Movie added successfully!'
+            message: 'Movie added successfully!',
           });
           this.resetForm();
         },
@@ -70,7 +80,7 @@ export class AddMovieComponent {
           this.alertService.openAlert({
             type: 'alert',
             title: 'Error',
-            message: 'Failed to add movie.'
+            message: 'Failed to add movie.',
           });
         }
       );
@@ -79,6 +89,6 @@ export class AddMovieComponent {
 
   resetForm(): void {
     this.movieForm.reset();
-    this.categoryCtrl.reset();
+    this.categories.clear();
   }
 }
