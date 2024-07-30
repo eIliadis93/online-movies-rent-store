@@ -6,12 +6,12 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Profile } from '../interface/profile';
 import { AlertService } from '../services/alert.service';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
 import { WindowSizeService } from '../services/window-size.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',

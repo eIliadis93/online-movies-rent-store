@@ -34,7 +34,7 @@ export class RentalsComponent implements OnInit, AfterViewInit, OnDestroy {
   pageIndex = 0;
   pageSizeOptions = [10, 25, 50, 100];
   filterByReturnDate: string | null = 'all';
-  isActiveFilter: boolean = false; // Added for active filter
+  isActiveFilter: boolean = false;
   displayedColumns: string[] = [
     'uuid',
     'rental_date',
@@ -74,39 +74,24 @@ export class RentalsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   fetchRentals(): void {
-    console.log(
-      'Fetching rentals for page index:',
-      this.pageIndex,
-      'page size:',
-      this.pageSize
-    ); // Debug log
-
     this.rentalService
-      .getRentals(
-        this.pageIndex + 1,
-        this.pageSize,
-        this.isActiveFilter // Assuming this parameter is supported by the API
-      )
+      .getRentals(this.pageIndex + 1, this.pageSize, this.isActiveFilter)
       .subscribe({
         next: (response: RentalsResponse) => {
-          console.log('Fetched rentals response:', response); // Debug log
+          this.totalResults = response.count;
+          this.rentals = response.results;
+          this.applyFilters();
+          this.dataSource.data = this.filteredRentals;
 
-          this.totalResults = response.count; // Total count from API
-          this.rentals = response.results; // Rental data
-          this.applyFilters(); // Apply any filters
-          this.dataSource.data = this.filteredRentals; // Update data source
-
-          // Ensure paginator reflects the current page, size, and length
           if (this.paginator) {
             this.paginator.pageIndex = this.pageIndex;
             this.paginator.pageSize = this.pageSize;
             this.paginator.length = this.totalResults;
           }
 
-          this.cdRef.detectChanges(); // Trigger change detection
+          this.cdRef.detectChanges();
         },
         error: (error) => {
-          console.error('Error loading rentals:', error); // Debug log
           this.alertService.openAlert({
             type: 'alert',
             title: 'Error',
@@ -117,15 +102,9 @@ export class RentalsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onPageChange(event: PageEvent): void {
-    console.log(
-      'Page changed to index:',
-      event.pageIndex,
-      'page size:',
-      event.pageSize
-    ); // Debug log
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.fetchRentals(); // Refetch rentals when page changes
+    this.fetchRentals();
   }
 
   applyReturnDateFilter(rentals: Rental[]): Rental[] {
@@ -153,10 +132,9 @@ export class RentalsComponent implements OnInit, AfterViewInit, OnDestroy {
           title: 'Success',
           message: 'Movie returned.',
         });
-        this.fetchRentals(); // Refetch rentals to reflect the return
+        this.fetchRentals();
       },
       error: (error) => {
-        console.error('Error returning movie:', error); // Debug log
         this.alertService.openAlert({
           type: 'alert',
           title: 'Error',
