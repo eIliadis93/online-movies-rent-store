@@ -13,3 +13,7 @@ The project is currently running only on development.
 Open a command line and use cd (the project path on your pc)
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Accounts
+
+In order to use the app an account will needed by the API owner.
