@@ -60,7 +60,7 @@ export class AuthService {
       );
   }
 
-  refreshToken(): Observable<any> {
+  refreshToken(): Observable<string> {
     const refreshToken = this.getRefreshToken();
     if (this.isRefreshing) {
       return this.refreshTokenSubject.asObservable();
@@ -87,6 +87,7 @@ export class AuthService {
         );
     }
   }
+  
 
   isAuthenticated(): Observable<boolean> {
     const token = localStorage.getItem('access_token');

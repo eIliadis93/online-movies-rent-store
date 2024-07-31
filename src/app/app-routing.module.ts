@@ -23,7 +23,7 @@ const routes: Routes = [
     component: AdminPanelComponent,
     canActivate: [AuthGuard, AdminGuard],
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/movies', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' },
 ];
 
