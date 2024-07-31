@@ -45,7 +45,6 @@ export class AuthService {
             const userRole = username === 'deuscand5admin' ? 'admin' : 'user';
             localStorage.setItem('user_role', userRole);
             this.isAdmin.next(userRole === 'admin');
-            console.log(this.isAdmin.value);
             this.loginStatus.next(true);
             this.isAdmin.value
               ? this.router.navigate(['/admin-panel'])

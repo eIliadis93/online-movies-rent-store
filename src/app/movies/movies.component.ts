@@ -45,7 +45,6 @@ export class MoviesComponent implements OnInit {
       this.toYear
     ).subscribe(
       (response: any) => {
-        console.log('Movies fetched:', response);
         this.movies = response.results;
         this.totalMovies = response.count;
         this.paginator.length = this.totalMovies;
@@ -61,7 +60,6 @@ export class MoviesComponent implements OnInit {
           this.totalMovies = 0;
           this.paginator.length = 0;
         } else {
-          console.error('Error fetching movies:', error);
           this.alertService.openAlert({
             type: 'alert',
             title: 'Error',

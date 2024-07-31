@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Movie, MovieCount } from '../interface/movie';
 import { MovieService } from '../services/movie.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-bubble-chart',
@@ -13,7 +14,7 @@ export class BubbleChartComponent implements OnInit, OnDestroy {
   private chart: any;
   private dataSubscription: Subscription = new Subscription();
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService, private alertService: AlertService) {}
 
   ngOnInit(): void {
     this.fetchMovieData();
@@ -60,7 +61,11 @@ export class BubbleChartComponent implements OnInit, OnDestroy {
           };
           this.renderChart();
         },
-        (error) => console.error('Error fetching movies:', error)
+        (error) => this.alertService.openAlert({
+          type: 'alert',
+          title: 'Error',
+          message: 'Error fetching Movies',
+        })
       )
     );
   }
@@ -119,8 +124,6 @@ export class BubbleChartComponent implements OnInit, OnDestroy {
         },
       });
       this.chart.render();
-    } else {
-      console.error('CanvasJS is not loaded or dataPoints are empty.');
     }
   }
   
