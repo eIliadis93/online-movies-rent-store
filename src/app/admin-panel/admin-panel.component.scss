@@ -1,14 +1,31 @@
-.expansion-panel{
-    background-color: #343a40;
-    margin-bottom: 15px;
-    padding: 10px;
-    &_title{
-        color: white;
-        font-weight: bold;
-    }
+.accordion-container {
+  margin: 20px;
+  padding: 10px;
 }
 
-.accordion-container {
-    margin: 20px;
-    padding: 10px;
+.expansion-panel {
+  background-color: #343a40;
+  padding: 10px;
+  margin-top: 10px !important;
+  
+  .mat-expansion-panel-header {
+    background-color: #343a40;
+    color: white;
+  }
+
+  .mat-expansion-panel-header .mat-panel-title {
+    color: white;
+    font-weight: bold;
+  }
+
+  .mat-expansion-panel-content {
+    background-color: #343a40;
+    color: white;
+  }
+
+  .mat-expansion-panel-content {
+    margin-top: 10px;
+  }
 }
+
+

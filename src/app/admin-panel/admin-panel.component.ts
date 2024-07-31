@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WindowSizeService } from '../services/window-size.service';
 
@@ -6,6 +6,7 @@ import { WindowSizeService } from '../services/window-size.service';
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AdminPanelComponent implements OnInit, OnDestroy {
   isAddMoviePanelOpen = false;
