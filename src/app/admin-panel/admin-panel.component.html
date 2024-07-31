@@ -19,4 +19,11 @@
     </mat-expansion-panel-header>
     <app-bubble-chart></app-bubble-chart>
   </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="onRentalPanelOpen()" class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel_title"> Rentals </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-rentals [isAdmin]="true" [isMobile]="isMobile"></app-rentals>
+  </mat-expansion-panel>
 </mat-accordion>

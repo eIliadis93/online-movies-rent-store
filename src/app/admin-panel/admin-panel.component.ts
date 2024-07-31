@@ -1,30 +1,42 @@
-import { Component, OnDestroy } from '@angular/core';
-import { MovieService } from '../services/movie.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { WindowSizeService } from '../services/window-size.service';
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.scss']
+  styleUrls: ['./admin-panel.component.scss'],
 })
-export class AdminPanelComponent implements OnDestroy {
+export class AdminPanelComponent implements OnInit, OnDestroy {
   isAddMoviePanelOpen = false;
   isBubbleChartPanelOpen = false;
+  isMobile: boolean = false;
+  isRentalOpen: boolean = false;
+  private subscriptions: Subscription = new Subscription();
 
-  constructor(private movieService: MovieService) {}
+  constructor(private windowSizeService: WindowSizeService) {}
+
+  ngOnInit(): void {
+    this.subscriptions.add(
+      this.windowSizeService.isMobile$.subscribe((isMobile) => {
+        this.isMobile = isMobile;
+      })
+    );
+  }
 
   ngOnDestroy(): void {
-    // Clean up any subscriptions or other resources if needed
+    this.subscriptions.unsubscribe();
   }
 
   onAddMoviePanelOpen(): void {
     this.isAddMoviePanelOpen = true;
-    console.log('Add Movie Panel opened');
-    // If you need to trigger some data fetch or reinitialization, you can do it here
   }
 
   onBubbleChartPanelOpen(): void {
     this.isBubbleChartPanelOpen = true;
-    console.log('Bubble Chart Panel opened');
-    // If you need to trigger some data fetch or reinitialization, you can do it here
+  }
+
+  onRentalPanelOpen(): void {
+    this.isRentalOpen = true;
   }
 }

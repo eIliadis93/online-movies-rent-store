@@ -41,7 +41,6 @@ export class RentalsComponent implements OnInit, AfterViewInit, OnDestroy {
     'return_date',
     'is_paid',
     'movie',
-    'actions',
   ];
 
   constructor(
@@ -69,6 +68,15 @@ export class RentalsComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.displayedColumns = this.displayedColumns.filter(
         (col) => col !== 'user'
+      );
+    }
+    if (!this.isAdmin) {
+      if (!this.displayedColumns.includes('actions')) {
+        this.displayedColumns.splice(5, 0, 'actions');
+      }
+    } else {
+      this.displayedColumns = this.displayedColumns.filter(
+        (col) => col !== 'actions'
       );
     }
   }
@@ -118,9 +126,7 @@ export class RentalsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   applyFilters(): void {
-    this.filteredRentals = this.rentals.filter(
-      (rental) => this.isAdmin || rental.user === this.profileEmail
-    );
+    this.filteredRentals = this.rentals;
     this.filteredRentals = this.applyReturnDateFilter(this.filteredRentals);
   }
 
@@ -145,7 +151,7 @@ export class RentalsComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  applyFilter(event: Event) {
+  applySearchFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value
       .trim()
       .toLowerCase();

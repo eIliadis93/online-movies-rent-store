@@ -23,7 +23,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   profile: Profile = {} as Profile;
   isEditingWallet = false;
   walletBalance!: number;
-  isAdmin: boolean = false;
   isMobile: boolean = false;
   private subscriptions: Subscription = new Subscription();
 
@@ -41,10 +40,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.isMobile = isMobile;
       })
     );
-    this.authService.isAdminUser().subscribe((isAdmin: boolean) => {
-      this.isAdmin = isAdmin;
-      this.cdRef.detectChanges();
-    });
     this.loadProfile();
   }
 
