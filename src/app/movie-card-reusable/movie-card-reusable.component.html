@@ -14,16 +14,13 @@
       <div class="placeholder">Pub Date</div>
     </ng-template>
   </mat-card-header>
-  <div class="movie-card-image" *ngIf="movie?.poster_url; else noImage">
+  <div class="movie-card-image">
     <img
       mat-card-avatar
-      [src]="movie?.poster_url"
+      [src]="this.image"
       alt="{{ movie?.title }} Poster"
     />
   </div>
-  <ng-template #noImage>
-    <div class="no-image-placeholder">No Image</div>
-  </ng-template>
   <mat-card-content>
     <div class="rating" *ngIf="movie?.rating; else ratingPlaceholder">Rating: {{ movie?.rating }} / 10</div>
     <ng-template #ratingPlaceholder>
